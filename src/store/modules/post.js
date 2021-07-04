@@ -4,13 +4,6 @@ export default {
     posts: JSON.parse(localStorage.getItem("posts") || "[]"),
   },
   actions: {
-    // async fetchPosts(ctx, limit = 3) {
-    //   const res = await fetch(
-    //     `https://jsonplaceholder.typicode.com/posts?_limit=${limit}`
-    //   );
-    //   const posts = await res.json();
-    //   ctx.commit("UPDATE_POSTS", posts);
-    // },
     async fetchPosts(ctx) {
       const res = await fetch(`/posts`);
       const json = await res.json();
@@ -25,6 +18,12 @@ export default {
       state.posts.unshift(newPost);
 
       localStorage.setItem("posts", JSON.stringify(state.posts));
+    },
+    DELETE_POST(state, index) {
+      const posts = JSON.parse(localStorage.getItem("posts"));
+      state.posts.splice(index, 0);
+      posts.splice(index, 0);
+      console.log();
     },
   },
   getters: {

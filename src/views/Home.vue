@@ -4,7 +4,8 @@
     <template v-else>
       <posts-form />
       <h1>{{ postsCount }}</h1>
-      <div v-for="post in allPosts" :key="post.id" class="post">
+      <div v-for="(post, i) in allPosts" :key="post.id" class="post">
+        <span class="post__remove" @click="deletePost(i)">remove</span>
         <h3>{{ post.title }}</h3>
         <p>{{ post.body }}</p>
       </div>
@@ -13,7 +14,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import PostsForm from "../components/PostsForm";
 
 export default {
@@ -27,7 +28,7 @@ export default {
   async mounted() {
     try {
       this.isLoading = true;
-      await this.fetchPosts(101);
+      await this.fetchPosts(100);
     } finally {
       this.isLoading = false;
     }
@@ -38,7 +39,13 @@ export default {
       return this.isLoading;
     },
   },
-  methods: mapActions(["fetchPosts"]),
+  methods: {
+    ...mapActions(["fetchPosts"]),
+    ...mapMutations(["DELETE_POST"]),
+    deletePost(item) {
+      this.DELETE_POST(item);
+    },
+  },
 };
 </script>
 
@@ -55,7 +62,14 @@ export default {
   align-items: center;
 }
 .post {
+  position: relative;
   width: 320px;
   border: 1px solid #ccc;
+  &__remove {
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
 }
 </style>
