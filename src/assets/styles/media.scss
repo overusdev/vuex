@@ -1,0 +1,8 @@
+$mobileWidth: 426;
+
+@mixin on-mobile {
+    @media (max-width: $mobileWidth * 1px) { @content; }
+}
+@mixin on-desktop {
+    @media (min-width: $mobileWidth * 1px) { @content; }
+}
