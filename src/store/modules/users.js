@@ -24,5 +24,8 @@ export default {
     getAllUsers(state) {
       return state.users;
     },
+    getAllUsersCount(state) {
+      return state.users.length;
+    },
   },
 };
