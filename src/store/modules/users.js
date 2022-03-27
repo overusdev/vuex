@@ -1,22 +1,27 @@
+import axios from 'axios';
+
 export default {
+  namespaced: true,
   state: {
     users: [],
   },
   actions: {
     async fetchUsers(ctx) {
-      const res = await fetch(`https://jsonplaceholder.typicode.com/users`);
-      const json = await res.json();
+      const usersDataQuery = await axios({
+        method: 'get',
+        url: 'http://127.0.0.1:8000/users/',
+      });
 
-      ctx.commit("UPDATE_USERS", json);
+      ctx.commit("SET_USERS", usersDataQuery.data.results);
     },
   },
   mutations: {
-    UPDATE_USERS(state, users) {
+    SET_USERS(state, users) {
       state.users = users;
     },
   },
   getters: {
-    allUsers(state) {
+    getAllUsers(state) {
       return state.users;
     },
   },

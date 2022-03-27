@@ -23,7 +23,7 @@ export default {
       const posts = JSON.parse(localStorage.getItem("posts"));
       state.posts.splice(index, 0);
       posts.splice(index, 0);
-      console.log();
+      console.log(posts);
     },
   },
   getters: {
